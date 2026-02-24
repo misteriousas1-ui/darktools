@@ -3,80 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DARKTOOLS | Private Access</title>
+    <title>DARKTOOLS | ULTIMATE TERMINAL</title>
     <style>
-        body { background-color: #050505; color: #00ff41; font-family: 'Courier New', monospace; margin: 0; overflow: hidden; display: flex; flex-direction: column; height: 100vh; }
-        #matrix-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.15; }
-        #terminal { padding: 20px; flex-grow: 1; overflow-y: auto; background: rgba(0, 0, 0, 0.8); }
-        .header { color: #ff0000; text-shadow: 0 0 10px #ff0000; font-weight: bold; text-align: center; font-size: 0.6em;}
-        .success { color: #0fa; font-weight: bold; }
-        input { background: transparent; border: none; color: #00ff41; outline: none; font-family: inherit; font-size: 1.1em; width: 80%; }
-        .loading-bar { color: #00ff41; letter-spacing: 2px; }
+        :root { --neon: #00ff41; --danger: #ff0000; --bg: #050505; }
+        body { background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; margin: 0; overflow: hidden; height: 100vh; }
+        #matrix-bg { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.2; }
+        
+        /* Layout Grid */
+        .wrapper { display: grid; grid-template-columns: 1fr 1.2fr; height: 100vh; gap: 10px; padding: 10px; box-sizing: border-box; }
+        
+        /* Panel Kiri: Menu & Robot */
+        .panel-left { border: 2px solid var(--neon); padding: 15px; display: flex; flex-direction: column; background: rgba(0,0,0,0.9); box-shadow: inset 0 0 15px var(--neon); }
+        .ascii-robot { font-size: 6px; line-height: 6px; color: var(--danger); text-align: center; margin-bottom: 10px; }
+        .menu-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+        .btn-menu { border: 1px solid var(--neon); padding: 10px; cursor: pointer; background: rgba(0,255,65,0.1); text-align: left; transition: 0.3s; }
+        .btn-menu:hover { background: var(--neon); color: #000; font-weight: bold; }
+        
+        /* Panel Kanan: Terminal */
+        .panel-right { border: 2px solid var(--danger); background: #000; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; box-shadow: inset 0 0 15px var(--danger); }
+        .term-header { border-bottom: 1px solid var(--danger); padding-bottom: 5px; margin-bottom: 10px; color: var(--danger); font-weight: bold; }
+        .log { font-size: 0.85em; margin-bottom: 5px; line-height: 1.2; }
+        .cmd-line { display: flex; align-items: center; margin-top: auto; border-top: 1px solid var(--neon); padding-top: 10px; }
+        input { background: transparent; border: none; color: white; outline: none; width: 100%; font-family: inherit; font-size: 1.1em; }
+
+        /* Overlay Code Access */
+        #access-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.95); z-index: 100; display: none; align-items: center; justify-content: center; flex-direction: column; }
+        .access-box { border: 2px solid var(--danger); padding: 40px; text-align: center; box-shadow: 0 0 30px var(--danger); }
+
+        @media (max-width: 768px) { .wrapper { grid-template-columns: 1fr; overflow-y: auto; } .panel-right { height: 300px; } }
     </style>
 </head>
 <body>
     <canvas id="matrix-bg"></canvas>
-    <div id="terminal">
-        <div class="header">
-            <pre>
-________    _____ __________ ____  __.___________ ________  .____       _________
-\______ \  /  _  \\______   \    |/ _|\__    ___/ \_____  \ |    |     /   _____/
- |    |  \/  /_\  \|       _/      <    |    |     /   |   \|    |     \_____  \ 
- |    `   /    |    \    |   \    |  \   |    |    /    |    \    |___  /        \
-/_______  \____|__  /____|_  /____|__ \  |____|    \_______  /_______ \/_______  /
-            [ ANONYMOUS SYSTEM v3.0 | ENCRYPTED BY DARKTOOLS ]
-            </pre>
+
+    <div id="access-overlay">
+        <div class="access-box">
+            <h1 style="color:var(--danger)">ENCRYPTED CORE</h1>
+            <p>INPUT BYPASS CODE TO EXECUTE:</p>
+            <input type="text" id="access-input" style="border: 1px solid var(--danger); padding: 10px; text-align: center;" placeholder="CODE HERE">
+            <button onclick="verifyCode()" style="margin-top:20px; padding:10px 30px; background:var(--danger); color:white; border:none; cursor:pointer;">DECRYPT</button>
         </div>
-        <div id="output"></div>
-        <div id="input-area">
-            <span style="color: #ff0000;">root@darktools:~#</span>
-            <input type="text" id="cmd-input" autofocus autocomplete="off">
+    </div>
+
+    <div class="wrapper">
+        <div class="panel-left">
+            <div class="ascii-robot">
+<pre>
+      _____          
+     /     \         
+    | () () |        
+     \  ^  /         
+      |||||          
+      |||||          
+ </pre>
+            </div>
+            <h2 style="text-align: center; color: var(--danger);">DARKTOOLS V4</h2>
+            <div class="menu-grid">
+                <div class="btn-menu" onclick="askAccess(1)">[01] INITIATE DDOS FLOOD</div>
+                <div class="btn-menu" onclick="askAccess(2)">[02] BYPASS GSM GATEWAY</div>
+                <div class="btn-menu" onclick="askAccess(3)">[03] DUMP CIVILIAN DATA</div>
+                <div class="btn-menu" onclick="askAccess(4)">[04] SAT-LINK GPS TRACK</div>
+                <div class="btn-menu" onclick="location.reload()">[05] SYSTEM REBOOT</div>
+            </div>
+            <p style="font-size: 10px; margin-top: 20px; opacity: 0.5;">STATUS: CONNECTION ENCRYPTED VIA TOR</p>
+        </div>
+
+        <div class="panel-right" id="terminal">
+            <div class="term-header">LIVE EXPLOIT TERMINAL</div>
+            <div id="terminal-log">
+                <div class="log">[SYSTEM] Waiting for command...</div>
+            </div>
         </div>
     </div>
 
     <script>
-        const output = document.getElementById('output');
-        const input = document.getElementById('cmd-input');
-        const menu = `<br>-- [ MENU DARKTOOLS ] --<br>[1] DDOS ATTACK<br>[2] PHONE BYPASS<br>[3] NIK DATABASE<br>[4] GPS TRACKER<br>[5] CLEAR<br>-------------------------<br>Pilih nomor menu...<br><br>`;
+        const terminalLog = document.getElementById('terminal-log');
+        let currentJob = 0;
+        const MASTER_CODE = "ADMIN-666";
 
-        function print(text, type = "") {
+        function log(msg, color = "#00ff41") {
             const div = document.createElement('div');
-            div.innerHTML = text;
-            if (type) div.className = type;
-            output.appendChild(div);
+            div.className = 'log';
+            div.style.color = color;
+            div.innerHTML = `> ${new Date().toLocaleTimeString()} | ${msg}`;
+            terminalLog.appendChild(div);
             document.getElementById('terminal').scrollTop = document.getElementById('terminal').scrollHeight;
         }
 
-        print("SISTEM BERHASIL DIINISIALISASI...");
-        setTimeout(() => print(menu), 500);
-
-        input.addEventListener('keydown', async (e) => {
-            if (e.key === 'Enter') {
-                const val = input.value.trim();
-                input.value = '';
-                if (val === '1') await runSim("DDOS ATTACK", "Target Server: OFFLINE");
-                else if (val === '2') await runSim("PHONE BYPASS", "SMS Berhasil Disadap");
-                else if (val === '3') await runSim("NIK DATABASE", "Foto KTP Berhasil Di-dump");
-                else if (val === '4') await runSim("GPS TRACKER", "Lokasi Terdeteksi");
-                else if (val === '5') output.innerHTML = menu;
-                else print("Perintah Salah.");
-            }
-        });
-
-        async function runSim(title, result) {
-            print(`<br>[!] Menjalankan ${title}...`);
-            for (let i = 0; i <= 10; i++) {
-                await new Promise(r => setTimeout(r, 150));
-                print(`[${"=".repeat(i)}${">"}${" ".repeat(10-i)}] ${i*10}%`, "loading-bar");
-            }
-            print(`[+] SELESAI: ${result}`, "success");
-            print(menu);
+        function askAccess(id) {
+            currentJob = id;
+            document.getElementById('access-overlay').style.display = 'flex';
         }
 
+        function verifyCode() {
+            const code = document.getElementById('access-input').value;
+            if(code === MASTER_CODE) {
+                document.getElementById('access-overlay').style.display = 'none';
+                document.getElementById('access-input').value = '';
+                executeJob(currentJob);
+            } else {
+                alert("ACCESS DENIED: INVALID CODE");
+            }
+        }
+
+        async function executeJob(id) {
+            const jobs = [
+                "", "DDOS FLOODING SERVER...", "GSM INTERCEPTION...", "SQL INJECTION DATABASE...", "TRIANGULATING GPS..."
+            ];
+            log(`STARTING: ${jobs[id]}`, "#ff0000");
+            
+            for(let i=0; i<=5; i++) {
+                await new Promise(r => setTimeout(r, 400));
+                log(`PACKET SENT [${"█".repeat(i)}${"-".repeat(5-i)}] - SEQUENCE_${Math.random().toString(16).slice(2,8)}`);
+            }
+            log(`DONE: EXPLOIT SUCCESSFUL.`, "#0fa");
+        }
+
+        // Matrix Effect
         const canvas = document.getElementById('matrix-bg');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        const letters = "010101"; const fontSize = 16;
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%";
+        const fontSize = 16;
         const columns = canvas.width / fontSize;
         const drops = Array(Math.floor(columns)).fill(1);
         function draw() {
