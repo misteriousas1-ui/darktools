@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DARKTOOLS | Private Access</title>
+    <style>
+        body { background-color: #050505; color: #00ff41; font-family: 'Courier New', monospace; margin: 0; overflow: hidden; display: flex; flex-direction: column; height: 100vh; }
+        #matrix-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.15; }
+        #terminal { padding: 20px; flex-grow: 1; overflow-y: auto; background: rgba(0, 0, 0, 0.8); }
+        .header { color: #ff0000; text-shadow: 0 0 10px #ff0000; font-weight: bold; text-align: center; font-size: 0.6em;}
+        .success { color: #0fa; font-weight: bold; }
+        input { background: transparent; border: none; color: #00ff41; outline: none; font-family: inherit; font-size: 1.1em; width: 80%; }
+        .loading-bar { color: #00ff41; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
+    <canvas id="matrix-bg"></canvas>
+    <div id="terminal">
+        <div class="header">
+            <pre>
+________    _____ __________ ____  __.___________ ________  .____       _________
+\______ \  /  _  \\______   \    |/ _|\__    ___/ \_____  \ |    |     /   _____/
+ |    |  \/  /_\  \|       _/      <    |    |     /   |   \|    |     \_____  \ 
+ |    `   /    |    \    |   \    |  \   |    |    /    |    \    |___  /        \
+/_______  \____|__  /____|_  /____|__ \  |____|    \_______  /_______ \/_______  /
+            [ ANONYMOUS SYSTEM v3.0 | ENCRYPTED BY DARKTOOLS ]
+            </pre>
+        </div>
+        <div id="output"></div>
+        <div id="input-area">
+            <span style="color: #ff0000;">root@darktools:~#</span>
+            <input type="text" id="cmd-input" autofocus autocomplete="off">
+        </div>
+    </div>
+
+    <script>
+        const output = document.getElementById('output');
+        const input = document.getElementById('cmd-input');
+        const menu = `<br>-- [ MENU DARKTOOLS ] --<br>[1] DDOS ATTACK<br>[2] PHONE BYPASS<br>[3] NIK DATABASE<br>[4] GPS TRACKER<br>[5] CLEAR<br>-------------------------<br>Pilih nomor menu...<br><br>`;
+
+        function print(text, type = "") {
+            const div = document.createElement('div');
+            div.innerHTML = text;
+            if (type) div.className = type;
+            output.appendChild(div);
+            document.getElementById('terminal').scrollTop = document.getElementById('terminal').scrollHeight;
+        }
+
+        print("SISTEM BERHASIL DIINISIALISASI...");
+        setTimeout(() => print(menu), 500);
+
+        input.addEventListener('keydown', async (e) => {
+            if (e.key === 'Enter') {
+                const val = input.value.trim();
+                input.value = '';
+                if (val === '1') await runSim("DDOS ATTACK", "Target Server: OFFLINE");
+                else if (val === '2') await runSim("PHONE BYPASS", "SMS Berhasil Disadap");
+                else if (val === '3') await runSim("NIK DATABASE", "Foto KTP Berhasil Di-dump");
+                else if (val === '4') await runSim("GPS TRACKER", "Lokasi Terdeteksi");
+                else if (val === '5') output.innerHTML = menu;
+                else print("Perintah Salah.");
+            }
+        });
+
+        async function runSim(title, result) {
+            print(`<br>[!] Menjalankan ${title}...`);
+            for (let i = 0; i <= 10; i++) {
+                await new Promise(r => setTimeout(r, 150));
+                print(`[${"=".repeat(i)}${">"}${" ".repeat(10-i)}] ${i*10}%`, "loading-bar");
+            }
+            print(`[+] SELESAI: ${result}`, "success");
+            print(menu);
+        }
+
+        const canvas = document.getElementById('matrix-bg');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        const letters = "010101"; const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+        function draw() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#0F0"; ctx.font = fontSize + "px monospace";
+            for (let i = 0; i < drops.length; i++) {
+                const text = letters[Math.floor(Math.random() * letters.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+        }
+        setInterval(draw, 50);
+    </script>
+</body>
+</html>
