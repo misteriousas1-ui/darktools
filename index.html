@@ -3,42 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DARKTOOLS V6 | CYBER MARKETPLACE</title>
+    <title>DARKTOOLS V7 | OVERKILL</title>
     <style>
-        :root { --neon: #00ff41; --danger: #ff0000; --gold: #ffd700; --buy: #ff6600; --bg: #010101; }
-        body { background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; margin: 0; overflow: hidden; height: 100vh; font-size: 11px; }
-        #matrix-bg { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.35; }
+        :root { --neon: #00ff41; --danger: #ff0000; --gold: #ffd700; --buy: #ff6600; --bg: rgba(5, 5, 5, 0.85); }
         
-        .wrapper { display: grid; grid-template-columns: 1.2fr 1fr; height: 100vh; gap: 8px; padding: 8px; box-sizing: border-box; }
+        * { box-sizing: border-box; }
+        body { background-color: #000; color: var(--neon); font-family: 'Courier New', monospace; margin: 0; overflow: hidden; height: 100vh; font-size: 11px; }
         
-        /* Panel Menu */
-        .panel-left { border: 1px solid var(--neon); padding: 10px; background: rgba(0,0,0,0.95); display: flex; flex-direction: column; box-shadow: 0 0 20px rgba(0,255,65,0.15); overflow-y: auto; }
-        .glitch-title { color: var(--danger); font-size: 1.8em; text-align: center; font-weight: bold; text-shadow: 0 0 10px var(--danger); margin-bottom: 5px; }
+        /* Background Matrix Fixed */
+        #matrix-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.5; }
         
-        .menu-item { border-bottom: 1px solid #222; padding: 12px 5px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; }
-        .menu-item:hover { background: rgba(0,255,65,0.1); border-left: 3px solid var(--danger); }
-        .price-tag { color: var(--gold); font-weight: bold; font-size: 10px; text-align: right; line-height: 1.2; }
-
-        /* Simbol Robotika */
-        .cyber-icons { display: flex; justify-content: center; gap: 15px; margin: 10px 0; font-size: 18px; color: var(--danger); }
-
-        /* Panel Terminal */
-        .panel-right { border: 1px solid var(--danger); background: #000; padding: 10px; display: flex; flex-direction: column; box-shadow: inset 0 0 30px rgba(255,0,0,0.1); }
-        .term-bar { background: var(--danger); color: white; padding: 3px 8px; font-weight: bold; font-size: 10px; display: flex; justify-content: space-between; }
-        #terminal-log { overflow-y: auto; flex-grow: 1; padding: 10px 0; }
-        .log-entry { margin-bottom: 4px; border-left: 2px solid #333; padding-left: 5px; }
-
-        /* Access Overlay */
-        #access-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.98); z-index: 100; display: none; align-items: center; justify-content: center; }
-        .access-box { border: 2px solid var(--danger); padding: 35px; text-align: center; background: #000; box-shadow: 0 0 60px var(--danger); width: 85%; max-width: 450px; }
-        .access-box input { background: #111; border: 1px solid var(--danger); color: white; padding: 12px; width: 100%; box-sizing: border-box; text-align: center; margin-bottom: 15px; font-family: inherit; }
+        .wrapper { display: grid; grid-template-columns: 1.3fr 1fr; height: 100vh; gap: 10px; padding: 10px; z-index: 1; position: relative; }
         
-        .btn-exe { background: var(--danger); color: white; border: none; padding: 10px; width: 100%; cursor: pointer; font-weight: bold; margin-bottom: 10px; }
-        .btn-buy { background: var(--buy); color: white; border: none; padding: 10px; width: 100%; cursor: pointer; font-weight: bold; text-decoration: none; display: block; }
+        /* Panel Kiri */
+        .panel-left { border: 2px solid var(--neon); padding: 15px; background: var(--bg); display: flex; flex-direction: column; box-shadow: inset 0 0 20px rgba(0,255,65,0.3); overflow-y: auto; }
+        .glitch-title { color: var(--danger); font-size: 2em; text-align: center; font-weight: bold; text-shadow: 3px 3px #000, 0 0 15px var(--danger); margin-bottom: 10px; letter-spacing: 2px; }
+        
+        .menu-item { border: 1px solid #333; padding: 15px 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; margin-bottom: 8px; background: rgba(0,0,0,0.6); }
+        .menu-item:hover { border-color: var(--danger); background: rgba(255,0,0,0.1); transform: scale(1.02); box-shadow: 0 0 15px rgba(255,0,0,0.2); }
+        .price-tag { text-align: right; line-height: 1.4; }
+        .usd { color: var(--gold); font-weight: bold; font-size: 12px; }
+        .idr { color: #aaa; font-size: 9px; }
 
-        marquee { color: var(--gold); font-size: 10px; border-top: 1px solid #333; padding-top: 5px; }
+        /* Simbol & Branding */
+        .cyber-icons { display: flex; justify-content: center; gap: 15px; margin: 15px 0; font-size: 22px; color: var(--danger); text-shadow: 0 0 10px var(--danger); }
+        .community-box { border-top: 2px double #333; margin-top: auto; padding-top: 10px; }
 
-        @media (max-width: 800px) { .wrapper { grid-template-columns: 1fr; } .panel-right { height: 300px; } }
+        /* Panel Kanan */
+        .panel-right { border: 2px solid var(--danger); background: rgba(0,0,0,0.9); padding: 10px; display: flex; flex-direction: column; box-shadow: inset 0 0 30px rgba(255,0,0,0.2); }
+        .term-bar { background: var(--danger); color: white; padding: 5px; font-weight: bold; text-align: center; letter-spacing: 3px; font-size: 10px; }
+        #terminal-log { overflow-y: auto; flex-grow: 1; padding: 10px 0; font-size: 10px; }
+
+        /* Overlay Access */
+        #access-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.95); z-index: 100; display: none; align-items: center; justify-content: center; }
+        .access-box { border: 3px solid var(--danger); padding: 40px; text-align: center; background: #000; box-shadow: 0 0 100px var(--danger); width: 90%; max-width: 500px; }
+        .access-box input { background: #050505; border: 1px solid var(--danger); color: white; padding: 15px; width: 100%; text-align: center; margin-bottom: 20px; font-family: inherit; font-size: 1.2em; }
+        .btn-buy { background: var(--buy); color: white; border: none; padding: 12px; width: 100%; cursor: pointer; font-weight: bold; text-decoration: none; display: block; margin-top: 10px; border-radius: 2px; }
+
+        marquee { color: var(--gold); background: rgba(255,215,0,0.1); padding: 3px; font-weight: bold; }
+
+        @media (max-width: 800px) { .wrapper { grid-template-columns: 1fr; } .panel-right { height: 280px; } }
     </style>
 </head>
 <body>
@@ -46,59 +50,54 @@
 
     <div id="access-overlay">
         <div class="access-box">
-            <h2 style="color:var(--danger); margin-top:0;">[ RESTRICTED AREA ]</h2>
-            <p style="color:white">Sistem terenkripsi. Masukkan lisensi script:</p>
-            <input type="text" id="access-input" placeholder="LICENSE KEY XXXXX-XXXXX">
-            <button class="btn-exe" onclick="verifyCode()">EXECUTE SCRIPT</button>
-            <div style="margin: 10px 0; color: #555;">--- ATAU ---</div>
-            <a href="https://wa.me/yournumber" class="btn-buy" target="_blank">BUY CODE ACCESS SCRIPT HACKING ($30)</a>
-            <button onclick="document.getElementById('access-overlay').style.display='none'" style="background:none; border:none; color:#555; margin-top:15px; cursor:pointer;">[ CANCEL ]</button>
+            <h1 style="color:var(--danger); margin:0 0 10px 0;">SYSTEM BREACH</h1>
+            <p style="color:white; margin-bottom:20px;">REQUIRED: SCRIPT LICENSE KEY</p>
+            <input type="text" id="access-input" placeholder="X-X-X-X-X">
+            <button onclick="verifyCode()" style="background:var(--danger); color:white; border:none; padding:12px; width:100%; cursor:pointer; font-weight:bold;">BYPASS NOW</button>
+            <a href="https://wa.me/6285776829661" class="btn-buy" target="_blank">🛒 BUY ACCESS CODE ($30 - $250)</a>
+            <p onclick="document.getElementById('access-overlay').style.display='none'" style="cursor:pointer; color:#444; margin-top:15px;">[ ABORT ]</p>
         </div>
     </div>
 
     <div class="wrapper">
         <div class="panel-left">
-            <div class="glitch-title">DARKTOOLS MARKET V6</div>
-            <div class="cyber-icons"><span>[⌬]</span><span>[⏦]</span><span>[⋇]</span><span>[⚙]</span><span>[⏣]</span></div>
+            <div class="glitch-title">DARKTOOLS OVERKILL V7</div>
+            <div class="cyber-icons"><span>☢</span><span>☣</span><span>☠</span><span>⌬</span><span>⚡</span></div>
             
             <div id="menu-container">
                 <div class="menu-item" onclick="askAccess(1)">
-                    <div>⚡ INITIATE DDOS FLOOD</div>
-                    <div class="price-tag">$30.00<br>(600.000 IDR)</div>
+                    <div>⚡ BASIC DDOS FLOOD</div>
+                    <div class="price-tag"><span class="usd">$30.00</span><br><span class="idr">Rp480.000</span></div>
                 </div>
                 <div class="menu-item" onclick="askAccess(2)">
-                    <div>📱 BYPASS GSM GATEWAY</div>
-                    <div class="price-tag">$30.00<br>(600.000 IDR)</div>
+                    <div>📱 BYPASS GSM GATEWAY PRO</div>
+                    <div class="price-tag"><span class="usd">$100.00</span><br><span class="idr">Rp1.600.000</span></div>
                 </div>
                 <div class="menu-item" onclick="askAccess(3)">
-                    <div>📂 NIK/KTP DATA DUMP</div>
-                    <div class="price-tag">$30.00<br>(600.000 IDR)</div>
+                    <div>📂 GOVT DATA EXFILTRATION</div>
+                    <div class="price-tag"><span class="usd">$250.00</span><br><span class="idr">Rp4.000.000</span></div>
                 </div>
                 <div class="menu-item" onclick="askAccess(4)">
-                    <div>🛰️ LIVE GPS TRACKING</div>
-                    <div class="price-tag">$30.00<br>(600.000 IDR)</div>
+                    <div>🛰️ MILITARY-GRADE GPS TRACK</div>
+                    <div class="price-tag"><span class="usd">$150.00</span><br><span class="idr">Rp2.400.000</span></div>
                 </div>
             </div>
 
-            <div class="cyber-icons" style="margin-top:20px;"><span>[☠]</span><span>[☣]</span><span>[⚔]</span><span>[⚖]</span></div>
-            
-            <div style="margin-top:auto;">
-                <p style="color:var(--danger); font-weight:bold; margin-bottom:5px;">ELITE NETWORK LIST:</p>
-                <marquee scrollamount="4">
-                    ● KEVIN MITNICK ● GARY MCKINNON ● ADRIAN LAMO ● ANONYMOUS ● LULZSEC ● CHAOS COMPUTER CLUB ● LAZARUS GROUP ● FANCY BEAR ● Bjorka
+            <div class="community-box">
+                <p style="color:var(--danger); font-weight:bold; margin:0 0 5px 0;">GLOBAL HACKER ALLIANCE:</p>
+                <marquee scrollamount="5">
+                    ☣ ANONYMOUS ☣ LULZSEC ☣ BJORKA ☣ REvil ☣ DARKNET INDONESIA ☣ APT28 ☣ LAZARUS GROUP ☣ ELITE HACKER SOCIETY ☣
                 </marquee>
-                <p style="font-size: 8px; opacity: 0.4; margin-top:5px;">UID: 0x666-FF-DARK-2026 | TOR ACTIVE | VPN TUNNEL: ON</p>
+                <div class="cyber-icons" style="font-size:15px; margin:10px 0;"><span>⚙</span><span>◈</span><span>⚖</span><span>🛡</span></div>
             </div>
         </div>
 
         <div class="panel-right">
-            <div class="term-bar">
-                <span>SYSTEM LOGS V.6.0.1</span>
-                <span>ENC: AES-256</span>
-            </div>
+            <div class="term-bar">LIVE EXPLOIT CONSOLE V7.0</div>
             <div id="terminal-log">
-                <div class="log-entry" style="color:var(--gold)">[SYSTEM] DarkTools V6 initialized.</div>
-                <div class="log-entry">[SYSTEM] Ready for operator authentication...</div>
+                <div style="color:var(--gold)">[SYSTEM] Ghost Protocol engaged...</div>
+                <div style="color:var(--gold)">[SYSTEM] Background matrix fixed.</div>
+                <div>[SYSTEM] Waiting for target selection...</div>
             </div>
         </div>
     </div>
@@ -110,11 +109,11 @@
 
         function log(msg, color = "#00ff41") {
             const div = document.createElement('div');
-            div.className = 'log-entry';
             div.style.color = color;
-            div.innerHTML = `> [${new Date().toLocaleTimeString()}] ${msg}`;
+            div.style.marginBottom = "3px";
+            div.innerHTML = `> [LOG] ${msg}`;
             terminalLog.appendChild(div);
-            document.querySelector('.panel-right').scrollTop = document.querySelector('.panel-right').scrollHeight;
+            terminalLog.parentElement.scrollTop = terminalLog.parentElement.scrollHeight;
         }
 
         function askAccess(id) {
@@ -129,42 +128,40 @@
                 document.getElementById('access-input').value = '';
                 executeJob(currentJob);
             } else {
-                log(`[CRITICAL] UNAUTHORIZED ATTEMPT WITH KEY: ${code}`, "#ff0000");
-                alert("ERROR: INVALID LICENSE KEY!");
+                log(`ALARM: UNAUTHORIZED ACCESS ATTEMPT!`, "#ff0000");
+                alert("ACCESS DENIED: INVALID LICENSE!");
             }
         }
 
         async function executeJob(id) {
-            const titles = ["", "DDOS FLOOD", "GSM BYPASS", "DATA DUMP", "GPS TRACK"];
-            log(`DECRYPTING PAYLOAD FOR ${titles[id]}...`, "var(--danger)");
-            
-            for(let i=0; i<=10; i++) {
-                await new Promise(r => setTimeout(r, 200));
-                let status = ["INJECTING...", "BYPASSING...", "STALING...", "EXTRACTING..."];
-                log(`[${i*10}%] ${status[Math.floor(Math.random()*status.length)]} ADDR: 0x${Math.random().toString(16).slice(2,8).toUpperCase()}`);
+            const titles = ["", "DDOS", "GSM BYPASS", "DATA EXFIL", "GPS TRACK"];
+            log(`EXECUTING: ${titles[id]}...`, "var(--danger)");
+            for(let i=0; i<=12; i++) {
+                await new Promise(r => setTimeout(r, 150));
+                log(`BYPASSING LAYER ${i}... 0x${Math.random().toString(16).toUpperCase().slice(2,8)}`);
             }
-            log(`[SUCCESS] OPERATION ${titles[id]} COMPLETED.`, "var(--gold)");
+            log(`CRITICAL SUCCESS: TARGET COMPROMISED!`, "var(--gold)");
         }
 
-        // Matrix Rain + Robotics Effect
+        // High Intensity Matrix Background
         const canvas = document.getElementById('matrix-bg');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        const chars = "010101010101⌬⏦⋇⚙⏣☠☣⚔";
-        const fontSize = 15;
+        const chars = "0101010101010101☢☣☠⌬⚡⚙◈⚖🛡";
+        const fontSize = 16;
         const columns = canvas.width / fontSize;
         const drops = Array(Math.floor(columns)).fill(1);
         function draw() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.1)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(0, 0, 0, 0.15)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = "#0F0"; ctx.font = fontSize + "px monospace";
             for (let i = 0; i < drops.length; i++) {
                 const text = chars[Math.floor(Math.random() * chars.length)];
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.985) drops[i] = 0;
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
                 drops[i]++;
             }
         }
-        setInterval(draw, 40);
+        setInterval(draw, 35);
     </script>
 </body>
 </html>
