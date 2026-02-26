@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DARKTOOLS V10 | BLACK MARKET</title>
+    <title>DARKTOOLS V11 | GEOLOCATION</title>
     <style>
         :root { --neon: #00ff41; --danger: #ff0000; --gold: #ffd700; --buy: #ff6600; }
         * { box-sizing: border-box; }
@@ -21,17 +21,16 @@
         .usd { color: var(--gold); font-weight: bold; font-size: 11px; }
         .idr { color: #fff; font-size: 10px; opacity: 0.9; }
 
-        /* Payment UI */
         #access-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.97); z-index: 1000; display: none; align-items: center; justify-content: center; }
         .access-box { border: 2px solid var(--danger); padding: 25px; text-align: center; background: #000; box-shadow: 0 0 50px var(--danger); width: 95%; max-width: 450px; }
         .pay-info { background: #111; border: 1px dashed var(--neon); padding: 12px; margin: 15px 0; text-align: left; font-size: 12px; }
         input { background: #111; border: 1px solid var(--danger); color: white; padding: 10px; width: 100%; text-align: center; margin-bottom: 10px; font-family: inherit; }
         .btn-wa { background: var(--buy); color: white; border: none; padding: 10px; width: 100%; cursor: pointer; font-weight: bold; text-decoration: none; display: block; margin-top: 5px; }
 
-        .panel-right { border: 2px solid var(--danger); background: rgba(0, 0, 0, 0.85); padding: 10px; display: flex; flex-direction: column; }
-        #terminal-log { overflow-y: auto; flex-grow: 1; font-size: 10px; color: #0fa; }
-        marquee { color: var(--gold); font-weight: bold; padding: 5px; border-top: 1px solid #333; }
-        @media (max-width: 800px) { .wrapper { grid-template-columns: 1fr; } .panel-right { height: 200px; } }
+        .panel-right { border: 2px solid var(--danger); background: rgba(0, 0, 0, 0.85); padding: 10px; display: flex; flex-direction: column; overflow: hidden; }
+        #terminal-log { overflow-y: auto; flex-grow: 1; font-size: 10px; color: #0fa; padding: 5px; }
+        
+        @media (max-width: 800px) { .wrapper { grid-template-columns: 1fr; } .panel-right { height: 250px; } }
     </style>
 </head>
 <body>
@@ -39,60 +38,53 @@
 
     <div id="access-overlay">
         <div class="access-box">
-            <h2 style="color:var(--danger); margin:0;">[ PAYMENT GATEWAY ]</h2>
+            <h2 style="color:var(--danger); margin:0;">[ SYSTEM ACCESS ]</h2>
             <div class="pay-info">
                 <p style="margin:4px 0; color:var(--gold)">BANK: <span style="color:white">SEABANK</span></p>
                 <p style="margin:4px 0; color:var(--gold)">NO REK: <span style="color:white">901268830684</span></p>
                 <p style="margin:4px 0; color:var(--gold)">NAMA: <span style="color:white">Hadi</span></p>
             </div>
-            <input type="text" id="access-input" placeholder="PASTE LICENSE KEY HERE">
-            <button onclick="verifyCode()" style="background:var(--danger); color:white; border:none; padding:10px; width:100%; cursor:pointer; font-weight:bold;">ACTIVATE SCRIPT</button>
-            <a id="wa-link" href="#" class="btn-wa" target="_blank" onclick="updateWALink()">KONFIRMASI PEMBAYARAN (WA)</a>
-            <p onclick="document.getElementById('access-overlay').style.display='none'" style="cursor:pointer; color:#555; margin-top:10px;">[ CANCEL ]</p>
+            <input type="text" id="access-input" placeholder="LICENSE KEY REQUIRED">
+            <button onclick="verifyCode()" style="background:var(--danger); color:white; border:none; padding:10px; width:100%; cursor:pointer; font-weight:bold;">BYPASS SCRIPT</button>
+            <a id="wa-link" href="#" class="btn-wa" target="_blank" onclick="updateWALink()">BELI LICENSE (WA)</a>
+            <p onclick="document.getElementById('access-overlay').style.display='none'" style="cursor:pointer; color:#555; margin-top:10px;">[ ABORT ]</p>
         </div>
     </div>
 
     <div class="wrapper">
         <div class="panel-left">
-            <div class="glitch-title">DARKTOOLS MARKET V10</div>
-            <p style="text-align:center; font-size:9px; margin:0 0 10px 0;">ENCRYPTED TRANSACTION | ANONYMOUS SCRIPT VENDOR</p>
+            <div class="glitch-title">DARKTOOLS V11</div>
+            <p style="text-align:center; font-size:9px; color:var(--gold);">LOCATOR & EXPLOIT HUB</p>
             
             <div id="menu-container">
-                <div class="menu-item" onclick="askAccess(0, 'SADAP WHATSAPP', 'Rp550.000')">
+                <div class="menu-item" onclick="askAccess('WA LOCATOR', 'Rp300.000')">
+                    <div>📍 LACAK NUMBER WHATSAPP</div>
+                    <div class="price-tag"><span class="usd">$20.00</span><br><span class="idr">Rp300.000</span></div>
+                </div>
+                <div class="menu-item" onclick="askAccess('SADAP WA', 'Rp550.000')">
                     <div>💬 SADAP WHATSAPP (VIP)</div>
                     <div class="price-tag"><span class="usd">$35.00</span><br><span class="idr">Rp550.000</span></div>
                 </div>
-                <div class="menu-item" onclick="askAccess(1, 'SOCIAL DATE NIK', 'Rp600.000')">
+                <div class="menu-item" onclick="askAccess('NIK EXPLOIT', 'Rp600.000')">
                     <div>📂 EXPLOIT SOCIAL DATE NIK</div>
                     <div class="price-tag"><span class="usd">$37.50</span><br><span class="idr">Rp600.000</span></div>
                 </div>
-                <div class="menu-item" onclick="askAccess(2, 'SPY CAMERA + LOC', 'Rp250.000')">
-                    <div>📸 SPY CAMERA + LACAK LOKASI</div>
+                <div class="menu-item" onclick="askAccess('SPY CAM', 'Rp250.000')">
+                    <div>📸 SPY CAMERA + LOCATOR</div>
                     <div class="price-tag"><span class="usd">$16.00</span><br><span class="idr">Rp250.000</span></div>
                 </div>
-                <div class="menu-item" onclick="askAccess(3, 'LOC IMIE GOOGLE', 'Rp200.000')">
-                    <div>📍 LACAK LOCATION IMEI GOOGLE</div>
-                    <div class="price-tag"><span class="usd">$13.00</span><br><span class="idr">Rp200.000</span></div>
-                </div>
-                <div class="menu-item" onclick="askAccess(4, 'UNBAN WHATSAPP', 'Rp150.000')">
-                    <div>🔓 UNBAN WHATSAPP (PERMANENT)</div>
+                <div class="menu-item" onclick="askAccess('UNBAN WA', 'Rp150.000')">
+                    <div>🔓 UNBAN WHATSAPP</div>
                     <div class="price-tag"><span class="usd">$10.00</span><br><span class="idr">Rp150.000</span></div>
                 </div>
-                <div class="menu-item" onclick="askAccess(5, 'CEK BANK DATA', 'Rp150.000')">
-                    <div>🏦 CEK BANK DATA (PRIVATE)</div>
-                    <div class="price-tag"><span class="usd">$10.00</span><br><span class="idr">Rp150.000</span></div>
-                </div>
-            </div>
-
-            <div style="margin-top:auto;">
-                <marquee scrollamount="4">● ANONYMOUS ● LULZSEC ● BJORKA ● DARKNET ID ● HADI ELITE SCRIPT ●</marquee>
             </div>
         </div>
 
         <div class="panel-right">
+            <div style="background:var(--danger); color:white; padding:3px; font-weight:bold; text-align:center; font-size:10px;">LIVE TERMINAL</div>
             <div id="terminal-log">
-                <div style="color:var(--gold)">[!] SYSTEM: DARKTOOLS V10 ONLINE</div>
-                <div>[!] STATUS: TUNNELING VIA TOR...</div>
+                <div style="color:var(--gold)">[!] DARKTOOLS OS LOADED.</div>
+                <div>[!] Waiting for authentication...</div>
             </div>
         </div>
     </div>
@@ -106,21 +98,20 @@
         function log(msg, color = "#00ff41") {
             const div = document.createElement('div');
             div.style.color = color;
-            div.innerHTML = `> [${new Date().toLocaleTimeString()}] ${msg}`;
+            div.innerHTML = `> ${msg}`;
             terminalLog.appendChild(div);
             terminalLog.parentElement.scrollTop = terminalLog.parentElement.scrollHeight;
         }
 
-        function askAccess(id, name, price) {
+        function askAccess(name, price) {
             selectedMenu = name;
             selectedPrice = price;
             document.getElementById('access-overlay').style.display = 'flex';
         }
 
         function updateWALink() {
-            // GANTI NOMOR DI BAWAH INI (AWALAN 62)
-            const myNumber = "628895753549"; 
-            const msg = `Halo Bang Hadi, saya ingin beli script:%0A%0A*Script:* ${selectedMenu}%0A*Harga:* ${selectedPrice}%0A%0ASaya sudah transfer ke SeaBank Hadi. Mohon dicek.`;
+            const myNumber = "628895753549"; // GANTI DENGAN NOMOR WA KAMU
+            const msg = `Halo Bang Hadi, saya ingin beli script:%0A%0A*Script:* ${selectedMenu}%0A*Harga:* ${selectedPrice}%0A%0ASaya sudah transfer ke SeaBank.`;
             document.getElementById('wa-link').href = `https://wa.me/${myNumber}?text=${msg}`;
         }
 
@@ -128,17 +119,42 @@
             const code = document.getElementById('access-input').value;
             if(code === MASTER_CODE) {
                 document.getElementById('access-overlay').style.display = 'none';
-                log(`EXECUTING ${selectedMenu}... SUCCESS`, "var(--gold)");
+                if(selectedMenu === 'WA LOCATOR') {
+                    startTracking();
+                } else {
+                    log(`EXECUTING ${selectedMenu}... SUCCESS`, "var(--gold)");
+                }
             } else {
-                log(`ERROR: LICENSE KEY "${code}" NOT FOUND`, "red");
-                alert("KODE SALAH / BELUM DIAKTIFKAN!");
+                alert("KODE SALAH!");
             }
         }
 
+        async function startTracking() {
+            const phone = prompt("MASUKKAN NOMOR WHATSAPP TARGET (Contoh: 62812xxx):");
+            if(!phone) return;
+            
+            log(`INITIATING SATELLITE TRIANGULATION FOR: ${phone}`, "var(--danger)");
+            await wait(1500);
+            log("BYPASSING WHATSAPP ENCRYPTION LAYER...");
+            await wait(2000);
+            log("PINGING SIGNAL FROM NEAREST CELL-TOWER...");
+            await wait(2000);
+            log("COORDINATES FOUND: -6.1754, 106.8272", "var(--gold)");
+            await wait(1500);
+            log("GENERATING MAP LINK...");
+            await wait(1000);
+            
+            const link = "https://www.google.com/maps/place/-7.3793914+110.5351396";
+            log(`SUCCESS: <a href="${link}" target="_blank" style="color:white; background:red; padding:2px;">KLIK UNTUK LIHAT LOKASI</a>`, "white");
+        }
+
+        function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+        // Matrix Rain
         const canvas = document.getElementById('matrix-bg');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        const chars = "01010101☢☣☠⌬⚡⚙◈⚖🛡";
+        const chars = "01010101☢☣☠⌬⚡⚙◈";
         const drops = Array(Math.floor(canvas.width/16)).fill(1);
         function draw() {
             ctx.fillStyle = "rgba(0,0,0,0.15)"; ctx.fillRect(0,0,canvas.width,canvas.height);
